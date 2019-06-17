@@ -1,5 +1,6 @@
 ﻿using UnityEngine.UI;
 using UnityEngine;
+using System.Collections;
 
 public class GameManager : MonoBehaviour {
 
@@ -8,7 +9,7 @@ public class GameManager : MonoBehaviour {
 	public GameObject objX;
 	public GameObject[] answerGroup;
 	public AnswerGroupSO[] answerGroupSO;
-
+	public GameObject gameOverCanvas;
 	[Space(15f)]
 	public Text textQuestionIndex;
 	public Text textTeamAScore;
@@ -65,7 +66,8 @@ public class GameManager : MonoBehaviour {
 			currentQ++;
 			textQuestionIndex.text = currentQ.ToString ();
 		}else{
-			//show canvas end
+			gameOverCanvas.SetActive (true);
+			StartCoroutine (Exiting ());
 		}
 	}
 
@@ -99,5 +101,12 @@ public class GameManager : MonoBehaviour {
 		NexttAnswerGroup ();
 		buttonAddTeamAScore.SetActive (true);
 		buttonAddTeamBScore.SetActive (true);
+	}
+
+	IEnumerator Exiting()
+	{
+		WaitForSeconds w = new WaitForSeconds (5f);
+		yield return w;
+		Application.Quit ();
 	}
 }
