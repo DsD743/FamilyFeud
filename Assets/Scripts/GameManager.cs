@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour {
 	public GameObject buttonAddTeamBScore;
 	public GameObject objX;
 	public GameObject[] answerGroup;
+	public GameObject[] buttonAnswers;
 	public AnswerGroupSO[] answerGroupSO;
 	public GameObject gameOverCanvas;
 	[Space(15f)]
@@ -61,10 +62,11 @@ public class GameManager : MonoBehaviour {
 					answers [i].text = string.Empty;
 				}
 				else answerGroup [i].SetActive (false);
+
+				buttonAnswers [i].SetActive (true);
 			}
 
-			currentQ++;
-			textQuestionIndex.text = currentQ.ToString ();
+			textQuestionIndex.text = (currentQ+1).ToString ();
 		}else{
 			gameOverCanvas.SetActive (true);
 			StartCoroutine (Exiting ());
@@ -73,6 +75,7 @@ public class GameManager : MonoBehaviour {
 
 	public void ButtonAnswerOnClick(int index)
 	{
+		buttonAnswers [index].SetActive (false);
 		int score = answerGroupSO [currentQ].answerGroup [index].score;
 		scores [index].text = score.ToString();
 		answers [index].text = answerGroupSO [currentQ].answerGroup [index].answer;
@@ -98,6 +101,7 @@ public class GameManager : MonoBehaviour {
 
 	public void ButtonNextQOnClick()
 	{
+		currentQ++;
 		NexttAnswerGroup ();
 		buttonAddTeamAScore.SetActive (true);
 		buttonAddTeamBScore.SetActive (true);
